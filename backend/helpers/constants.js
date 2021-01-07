@@ -1,3 +1,3 @@
 exports.constants = {
-  logger: 'app-template'
+  logger: 'sample-qc',
 };

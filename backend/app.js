@@ -6,33 +6,21 @@ const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
 const apiResponse = require('./helpers/apiResponse');
 const cors = require('cors');
+const { Sequelize } = require('sequelize');
 
 const jwtInCookie = require('jwt-in-cookie');
 jwtInCookie.configure({ secret: process.env.JWT_SECRET });
 
-// DB connection
-const MONGODB_URL = process.env.MONGODB_URL;
-const mongoose = require('mongoose');
-mongoose
-  .connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    //don't show the log when it is test
-    if (process.env.NODE_ENV !== 'test') {
-      console.log('Connected to %s', MONGODB_URL);
-      console.log('App is running ... \n');
-      console.log('Press CTRL + C to stop the process. \n');
-    }
-  })
-  .catch((err) => {
-    const errMessage = `Failed to connect to Mongo: "${err.message}"`;
-    console.error(errMessage);
-    throw new Error(errMessage);
-  });
-
 // REMOVE ME - populateDB
 // const {populateDB} = require('./models/setup_deleteMe');
 // populateDB();
-
+const db = require('./models/index');
+db.sequelize
+  .authenticate()
+  .then((response) => console.log('Connection has been established successfully.'))
+  .catch((error) => {
+    console.error('Unable to connect to the database:', error);
+  });
 const app = express();
 
 app.use(express.json());
