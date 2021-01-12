@@ -1,0 +1,78 @@
+:root {
+  --mskcc-blue: #007cba;
+  --mskcc-orange: #df4602;
+  --mskcc-dark-blue: #006098;
+  --mskcc-medium-blue: #40b4e5;
+  --mskcc-light-blue: #8fc7e8;
+  --mskcc-dark-orange: #c24d00;
+  --mskcc-medium-orange: #f29934;
+  --mskcc-light-orange: #f6c65b;
+  --mskcc-dark-violet: #83276b;
+  --mskcc-light-violet: #b687b8;
+  --mskcc-dark-magenta: #e92076;
+  --mskcc-light-magenta: #efb3cb;
+  --mskcc-red: #b1132d;
+  --mskcc-dark-green: #4c8b2b;
+  --mskcc-light-green: #a6ce39;
+  --mskcc-dark-turquoise: #006c68;
+  --mskcc-light-turquoise: #009490;
+  --mskcc-dark-yellow: #ffc20e;
+  --mskcc-light-yellow: #ffe100;
+  --mskcc-dark-gray: #9e9e98;
+  --mskcc-light-gray: #d5d4c7;
+  --material-gray: #eceff1;
+}
+
+#app {
+  /* font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px; */
+
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: auto;
+  display: grid;
+}
+
+.content {
+  display: grid;
+  grid-template-areas: 'sidebar comments' 'sidebar comments' 'sidebar tables ';
+  /* grid-template-rows: 30vh 65vh; */
+  grid-template-columns: 15% 85%;
+  /* grid-row-gap: 1em; */
+  /* grid-column-gap: 1em; */
+}
+
+.sidebar {
+  grid-area: sidebar;
+  display: grid;
+  min-height: 92vh;
+  background-color: #eceff1;
+
+  /* textAlign: 'center',
+    gridArea: 'sidebar',
+    minHeight: '92vh',
+    backgroundColor: '#eceff1',
+    display: 'grid',
+    gridTemplate: '\'search\' \'infoPanel\'',
+    justifyItems: 'center',
+    borderRight: '2px solid darkgray',
+    gridTemplateRows: '.1fr .9fr',
+    alignItems: 'flex-start', */
+}
+
+.table {
+  grid-area: tables;
+}
+
+.comment-area {
+  grid-area: comments;
+}

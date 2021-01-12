@@ -16,8 +16,11 @@ jwtInCookie.configure({ secret: process.env.JWT_SECRET });
 // populateDB();
 const db = require('./models/index');
 db.sequelize
+  // sync with logging, replace authenticate() with sync bc it includes authenticate
+  // connection.sync({logging: console.log})
+  // db.sync({logging: console.log})?
   .authenticate()
-  .then((response) => console.log('Connection has been established successfully.'))
+  .then(() => console.log('Connection to database established successfully.'))
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
