@@ -76,3 +76,14 @@
 .comment-area {
   grid-area: comments;
 }
+
+.md-card {
+  max-width: 80%;
+  height: 50%;
+}
+
+.table-container {
+  width: 100vw;
+  overflow-x: auto;
+  display: grid;
+}

@@ -8,6 +8,8 @@ const apiResponse = require('./helpers/apiResponse');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
 const jwtInCookie = require('jwt-in-cookie');
 jwtInCookie.configure({ secret: process.env.JWT_SECRET });
 

@@ -4,7 +4,7 @@
     <!-- <HelloWorld /> -->
     <span>
       <show-header></show-header>
-      <report-page></report-page>
+      <router-view></router-view>
     </span>
   </div>
 </template>
@@ -12,14 +12,12 @@
 <script>
 // import HelloWorld from './components/HelloWorld.vue';
 import ShowHeader from './components/ShowHeader.vue';
-import ReportPage from './components/pages/ReportPage.vue';
 
 export default {
   name: 'App',
   components: {
     // HelloWorld,
     ShowHeader,
-    ReportPage,
   },
 };
 </script>
