@@ -1,26 +1,25 @@
 <template>
   <div class="table">
     <md-tabs>
-      <span>
-        <md-tab v-for="(reportType, index) in reportTypes" :key="index" :id="reportType" :md-label="reportType">
-          <div class="table-container">
-            <hot-table
-              :columns="reports[reportType].columns"
-              :rowHeaders="true"
-              :colHeaders="reports[reportType].columns.map((element) => element.columnHeader)"
-              licenseKey="non-commercial-and-evaluation"
-              height="500"
-            >
-            </hot-table>
-          </div>
-        </md-tab>
-      </span>
+      <md-tab v-for="(reportType, index) in reportTypes" :key="index" :id="reportType" :md-label="reportType">
+        <div class="table-container">
+          <hot-table
+            :columns="reports[reportType].columns"
+            :rowHeaders="true"
+            :colHeaders="reports[reportType].columns.map((element) => element.columnHeader)"
+            licenseKey="non-commercial-and-evaluation"
+            height="500"
+          >
+          </hot-table>
+        </div>
+      </md-tab>
     </md-tabs>
   </div>
 </template>
 
 <script>
-const axios = require('axios');
+// const axios = require('axios');
+import * as app from './../app.js';
 import { API_URL } from './../../config.js';
 import { HotTable } from '@handsontable/vue';
 
@@ -48,7 +47,7 @@ export default {
     },
   },
   mounted() {
-    axios
+    app.axios
       .get(`${API_URL}/report/getReports/07323_R`)
       .then((response) => {
         console.log(response.data);

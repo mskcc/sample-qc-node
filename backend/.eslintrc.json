@@ -5,26 +5,13 @@
     "node": true,
     "mocha": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:node/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
   },
   "parserOptions": {
     "sourceType": "module"
-
   }
 }

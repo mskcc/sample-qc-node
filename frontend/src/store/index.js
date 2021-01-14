@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-const axios = require('axios');
+// const axios = require('axios');
 import { API_URL } from './../../config.js';
+import * as app from './../app.js';
 
 Vue.use(Vuex);
 
@@ -25,7 +26,7 @@ export default new Vuex.Store({
   //   commit mutations
   actions: {
     setReports(context) {
-      axios
+      app.axios
         .get(`${API_URL}/report/getReports/${this.state.requestId}`)
         .then((response) => {
           console.log(response);

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import * as app from './app.js';
+// import { AUTH_URL, HOME_PAGE_PATH } from './../config.js';
 
 import App from './App.vue';
 import { MdAvatar, MdButton, MdCard, MdField, MdTabs, MdToolbar } from 'vue-material/dist/components';
@@ -21,6 +23,27 @@ Vue.use(MdTabs);
 Vue.use(MdToolbar);
 
 Vue.config.productionTip = false;
+
+app.axios.interceptors.response.use(
+  (response) => {
+    //   if (response.status === 200 || response.status === 201) {
+    return Promise.resolve(response);
+    //   } else {
+    //     return Promise.reject(response);
+    //   }
+  },
+  (error) => {
+    if (error.response.status) {
+      switch (error.response.status) {
+        case 401:
+          // window.location.href = AUTH_URL + HOME_PAGE_PATH;
+          // alert('session expired');
+          break;
+      }
+      return Promise.reject(error.response);
+    }
+  }
+);
 
 const routes = [
   { path: '/', component: ReportPage, name: 'report' },
