@@ -53,15 +53,11 @@ exports.getCatFact = async function () {
 // queries IGO LIMS REST
 exports.getRequestSamples = async function (requestId) {
   return axios
-    .get(
-      process.env.LIMS_API_ROOT + '/api/getRequestSamples',
-
-      {
-        auth: { ...LIMS_AUTH },
-        httpsAgent: agent,
-        params: { request: requestId },
-      }
-    )
+    .get(process.env.LIMS_API_ROOT + '/api/getRequestSamples', {
+      auth: { ...LIMS_AUTH },
+      httpsAgent: agent,
+      params: { request: requestId },
+    })
     .then((limsResponse) => {
       // let limsAssays = limsResponse.data.assays;
       // // response.status(200).json(response.data);
@@ -84,22 +80,18 @@ exports.getRequestSamples = async function (requestId) {
 
 // gets all reports and samples in a request
 exports.getQcReportSamples = async function (requestId, arrayOfSamples) {
+  let data = { requestId: requestId, otherSampleIds: arrayOfSamples.join() };
   return axios
     .post(
       // 'https://tango.mskcc.org:8443/LimsRest/getPickListValues?list=ddPCR+Assay',
-      process.env.LIMS_API_ROOT + '/getQcReportSamples',
+      process.env.LIMS_API_ROOT + '/postQcReportSamples',
+      data,
       {
         auth: { ...LIMS_AUTH },
         httpsAgent: agent,
-      },
-      { request: requestId, samples: arrayOfSamples.join() }
+      }
     )
     .then((limsResponse) => {
-      // let limsAssays = limsResponse.data.assays;
-      // // response.status(200).json(response.data);
-      // limsAssays.forEach((limsAssay) => console.log(limsAssay.assayName));
-      // response.status(200).json(limsAssays);
-      // console.log(limsResponse);
       return limsResponse;
     })
 
