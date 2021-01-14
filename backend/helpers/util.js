@@ -1,7 +1,7 @@
 const columnConstants = require('./columnConstants.js');
 
 export function buildReportTables(limsResponse) {
-  console.log(limsResponse);
+  // console.log(limsResponse);
   //   iterate over limsresponse entries and check if there are columns for that entry
   let limsResponseEntries = Object.keys(limsResponse);
   let frontEndResponse = {};
@@ -16,11 +16,10 @@ export function buildReportTables(limsResponse) {
       // iterate over ordered column array
       let orderedColumnDefs = [];
       //   add that column object from columnDefs
-      console.log(entry);
       columnConstants[columnConstantsOrder].forEach((column) => orderedColumnDefs.push(columnDefs[column]));
       //   console.log(orderedColumnDefs);
       frontEndResponse[entry] = { columns: orderedColumnDefs };
-      console.log(JSON.stringify(frontEndResponse));
+      // console.log(JSON.stringify(frontEndResponse));
     } else {
       //   console.log(entry);
     }

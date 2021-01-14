@@ -12,7 +12,7 @@ const { buildReportTables } = require('../helpers/util');
 exports.getReports = [
   authenticateRequest,
   function (req, res) {
-    console.log(req.params);
+    // console.log(req.params);
     let requestId = req.params.requestId;
     if (!requestId) {
       return apiResponse.ErrorResponse(res, 'missing Request ID');
@@ -26,7 +26,7 @@ exports.getReports = [
     //     .then((requests) => console.log(requests));
     getRequestSamples(requestId)
       .then((request) => {
-        console.log(request.data);
+        // console.log(request.data);
         let sampleIds = [];
         // gets all sample ID from the lims response
         request.data.samples.forEach((element) => {

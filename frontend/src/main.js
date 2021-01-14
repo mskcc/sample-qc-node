@@ -24,6 +24,7 @@ Vue.use(MdToolbar);
 
 Vue.config.productionTip = false;
 
+app.axios.defaults.withCredentials = true;
 app.axios.interceptors.response.use(
   (response) => {
     //   if (response.status === 200 || response.status === 201) {
