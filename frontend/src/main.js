@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import * as app from './app.js';
-// import { AUTH_URL, HOME_PAGE_PATH } from './../config.js';
+import { AUTH_URL, HOME_PAGE_PATH } from './../config.js';
 
 import App from './App.vue';
 import { MdAvatar, MdButton, MdCard, MdField, MdTabs, MdToolbar } from 'vue-material/dist/components';
@@ -25,6 +25,7 @@ Vue.use(MdToolbar);
 Vue.config.productionTip = false;
 
 app.axios.defaults.withCredentials = true;
+// will redirect if cookie is invalid
 app.axios.interceptors.response.use(
   (response) => {
     //   if (response.status === 200 || response.status === 201) {
@@ -37,7 +38,7 @@ app.axios.interceptors.response.use(
     if (error.response.status) {
       switch (error.response.status) {
         case 401:
-          // window.location.href = AUTH_URL + HOME_PAGE_PATH;
+          window.location.href = AUTH_URL + HOME_PAGE_PATH;
           // alert('session expired');
           break;
       }

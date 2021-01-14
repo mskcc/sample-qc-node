@@ -1,7 +1,7 @@
 const columnConstants = require('./columnConstants.js');
 
 export function buildReportTables(limsResponse) {
-  // console.log(limsResponse);
+  console.log(limsResponse);
   //   iterate over limsresponse entries and check if there are columns for that entry
   let limsResponseEntries = Object.keys(limsResponse);
   let frontEndResponse = {};
@@ -16,9 +16,29 @@ export function buildReportTables(limsResponse) {
       // iterate over ordered column array
       let orderedColumnDefs = [];
       //   add that column object from columnDefs
-      columnConstants[columnConstantsOrder].forEach((column) => orderedColumnDefs.push(columnDefs[column]));
+      columnConstants[columnConstantsOrder].forEach((column) => {
+        let resultColumn = columnDefs[column];
+        console.log(resultColumn);
+        if (resultColumn.data === 'totalMass') {
+          // get first limsresponse sample and check its units so we can update the column header
+          if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'ng/ul') {
+            resultColumn.columnHeader = 'Total Mass (ng)';
+          } else if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'nm') {
+            resultColumn.columnHeader = 'Total Mass (fmole)';
+          }
+        }
+        if (resultColumn.data === 'concentration') {
+          if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'ng/ul') {
+            resultColumn.columnHeader = 'Concentration (ng/uL)';
+          } else if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'nm') {
+            resultColumn.columnHeader = 'Concentration (nM)';
+          }
+        }
+        console.log(resultColumn);
+        orderedColumnDefs.push(resultColumn);
+      });
       //   console.log(orderedColumnDefs);
-      frontEndResponse[entry] = { columns: orderedColumnDefs };
+      frontEndResponse[entry] = { columns: orderedColumnDefs, data: limsResponse[entry] };
       // console.log(JSON.stringify(frontEndResponse));
     } else {
       //   console.log(entry);

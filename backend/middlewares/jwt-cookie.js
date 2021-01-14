@@ -1,6 +1,7 @@
 const jwtInCookie = require('jwt-in-cookie');
 const apiResponse = require('../helpers/apiResponse');
 exports.authenticateRequest = function (req, res, next) {
+  // console.log(req.cookies);
   if (process.env.ENV === 'PROD') {
     next();
     return;

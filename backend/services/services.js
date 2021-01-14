@@ -85,15 +85,14 @@ exports.getRequestSamples = async function (requestId) {
 // gets all reports and samples in a request
 exports.getQcReportSamples = async function (requestId, arrayOfSamples) {
   return axios
-    .get(
+    .post(
       // 'https://tango.mskcc.org:8443/LimsRest/getPickListValues?list=ddPCR+Assay',
       process.env.LIMS_API_ROOT + '/getQcReportSamples',
-
       {
         auth: { ...LIMS_AUTH },
         httpsAgent: agent,
-        params: { request: requestId, samples: arrayOfSamples.join() },
-      }
+      },
+      { request: requestId, samples: arrayOfSamples.join() }
     )
     .then((limsResponse) => {
       // let limsAssays = limsResponse.data.assays;

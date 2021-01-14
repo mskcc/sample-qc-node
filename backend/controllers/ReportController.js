@@ -17,6 +17,8 @@ exports.getReports = [
     if (!requestId) {
       return apiResponse.ErrorResponse(res, 'missing Request ID');
     }
+    // TODO if res.user check if there is a commentrelation for this requestid and that they are in recipients
+
     // get commentrelations who's id is not in decisions table
     //   db.models.commentrelations
     //     .findAll({
@@ -33,7 +35,6 @@ exports.getReports = [
           sampleIds.push(element.investigatorSampleId);
         });
 
-        // TODO is user authorized on request
         // sends requestid and samples and returns reports in request, prepares handsontable
         getQcReportSamples(requestId, sampleIds).then((limsReports) => {
           let reports = buildReportTables(limsReports.data);
