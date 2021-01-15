@@ -125,3 +125,22 @@ exports.getAttachment = async function (recordId) {
       return response;
     });
 };
+
+exports.getPicklistValues = async function (picklist) {
+  return axios
+    .get(process.env.LIMS_API_ROOT + '/getPickListValues?list=' + picklist, {
+      auth: { ...LIMS_AUTH },
+      httpsAgent: agent,
+    })
+    .then((limsResponse) => {
+      // console.log(limsResponse);
+      return limsResponse.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      throw error;
+    })
+    .then((response) => {
+      return response;
+    });
+};

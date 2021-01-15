@@ -1,6 +1,7 @@
 const columnConstants = require('./columnConstants.js');
+const { getPicklistValues } = require('../services/services');
 
-export function buildReportTables(limsResponse) {
+export function buildReportTables(limsResponse, user) {
   console.log(limsResponse);
   //   iterate over limsresponse entries and check if there are columns for that entry
   let limsResponseEntries = Object.keys(limsResponse);
@@ -18,7 +19,7 @@ export function buildReportTables(limsResponse) {
       //   add that column object from columnDefs
       columnConstants[columnConstantsOrder].forEach((column) => {
         let resultColumn = columnDefs[column];
-        console.log(resultColumn);
+        // console.log(resultColumn);
         if (resultColumn.data === 'totalMass') {
           // get first limsresponse sample and check its units so we can update the column header
           if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'ng/ul') {
@@ -34,7 +35,15 @@ export function buildReportTables(limsResponse) {
             resultColumn.columnHeader = 'Concentration (nM)';
           }
         }
-        console.log(resultColumn);
+        if (resultColumn.data === 'investigatorDecision') {
+          // only investigators or cmo pms for cmo projects get to make decisions
+          // decisions are only editable if no decisions have been made in lims
+          if (user.isUser === true) {
+            //   change resultcolumn readonly property to false
+            resultColumn.readOnly = false;
+          }
+        }
+        // console.log(resultColumn);
         orderedColumnDefs.push(resultColumn);
       });
       //   console.log(orderedColumnDefs);

@@ -14,6 +14,7 @@
     "file-saver": "^2.0.5",
     "handsontable": "^8.2.0",
     "vue": "^2.6.11",
+    "vue-loading-overlay": "^3.4.2",
     "vue-material": "^1.0.0-beta-15",
     "vue-router": "^3.4.9",
     "vuex": "^3.6.0"

@@ -38,7 +38,7 @@ exports.getReports = [
 
         // sends requestid and samples and returns reports in request, prepares handsontable
         getQcReportSamples(requestId, sampleIds).then((limsReports) => {
-          let reports = buildReportTables(limsReports.data);
+          let reports = buildReportTables(limsReports.data, res.user);
           //   console.log(reports);
           return apiResponse.successResponseWithData(res, 'success', reports);
         });
