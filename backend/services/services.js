@@ -105,3 +105,23 @@ exports.getQcReportSamples = async function (requestId, arrayOfSamples) {
       return response;
     });
 };
+
+exports.getAttachment = async function (recordId) {
+  return axios
+    .get(process.env.LIMS_API_ROOT + '/getAttachmentFile', {
+      auth: { ...LIMS_AUTH },
+      httpsAgent: agent,
+      params: { recordId },
+      responseType: 'stream',
+    })
+    .then((limsResponse) => {
+      return limsResponse;
+    })
+    .catch((error) => {
+      console.log(error);
+      throw error;
+    })
+    .then((response) => {
+      return response;
+    });
+};

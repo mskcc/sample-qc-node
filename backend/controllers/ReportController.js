@@ -1,6 +1,6 @@
 const apiResponse = require('../helpers/apiResponse');
 const { authenticateRequest } = require('../middlewares/jwt-cookie');
-const { getRequestSamples, getQcReportSamples } = require('../services/services');
+const { getRequestSamples, getQcReportSamples, getAttachment } = require('../services/services');
 
 const Cache = require('../helpers/cache');
 const ttl = 60 * 60 * 1; // cache for 1 Hour
@@ -8,6 +8,7 @@ const cache = new Cache(ttl); // Create a new cache service instance
 const { logger } = require('../helpers/winston');
 const db = require('../models/index');
 const { buildReportTables } = require('../helpers/util');
+const fs = require('fs');
 
 exports.getReports = [
   authenticateRequest,
@@ -47,5 +48,21 @@ exports.getReports = [
         console.log('error');
         return apiResponse.ErrorResponse(res, 'no samples');
       });
+  },
+];
+
+// exports.downloadAttachment = [authenticateRequest, function (req, res) {
+exports.downloadAttachment = [
+  function (req, res) {
+    let recordId = req.params.recordId;    
+    getAttachment(recordId)
+      .then((response) => {
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
+        // This is not using the API Response class, it "pipes" the file contents firectly into the res object
+        // https://nodejs.org/en/knowledge/advanced/streams/how-to-use-stream-pipe/
+        response.data.pipe(res);
+      })
+      .catch(() => apiResponse.ErrorResponse(res, 'could not load attachment'));
   },
 ];

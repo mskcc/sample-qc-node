@@ -1,5 +1,6 @@
 <template>
   <div class="table">
+    <md-button @click="downloadAttachment">Download Random Attachment</md-button>
     <md-tabs>
       <md-tab v-for="(reportType, index) in reportTypes" :key="index" :id="reportType" :md-label="reportType">
         <div class="table-container">
@@ -19,10 +20,10 @@
 </template>
 
 <script>
-// const axios = require('axios');
-// import * as app from './../app.js';
-// import { API_URL } from './../../config.js';
+import * as app from './../app.js';
+import { API_URL } from './../../config.js';
 import { HotTable } from '@handsontable/vue';
+import { saveAs } from 'file-saver';
 
 export default {
   data: function() {
@@ -40,11 +41,26 @@ export default {
     HotTable,
   },
   computed: {
-    reports: function() {
-      return this.$store.getters.getReports;
-    },
+    reports: () => this.$store.getters.getReports,
     reportTypes: function() {
       return this.$store.getters.getReportTypes;
+    },
+  },
+  methods: {
+    downloadAttachment: () => {
+      let fileName = 'RequestId-ReportType.pdf';
+      app.axios
+        .get(`${API_URL}/report/downloadAttachment/6473349`, { responseType: 'blob' })
+        .then((response) => {
+          console.log(response);
+          saveAs(
+            new Blob([response.data], {
+              type: 'application/pdf',
+            }),
+            fileName
+          );
+        })
+        .catch((error) => console.log(error));
     },
   },
 };
