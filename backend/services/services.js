@@ -144,3 +144,25 @@ exports.getPicklistValues = async function (picklist) {
       return response;
     });
 };
+
+exports.setInvestigatorDecisions = async function (decisions) {
+  let data = [];
+  data[0] = decisions;
+
+  return axios
+    .post(process.env.LIMS_API_ROOT + '/setInvestigatorDecision', data, {
+      auth: { ...LIMS_AUTH },
+      httpsAgent: agent,
+    })
+    .then((limsResponse) => {
+      return limsResponse.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      throw error;
+    })
+    .then((response) => {
+      console.log(response);
+      // return response;
+    });
+};

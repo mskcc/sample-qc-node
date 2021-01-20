@@ -7,6 +7,9 @@ import App from './App.vue';
 import { MdAvatar, MdButton, MdCard, MdField, MdTabs, MdToolbar } from 'vue-material/dist/components';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 // import { router } from '../../backend/app';
 import ReportPage from './components/pages/ReportPage.vue';
 import PendingPage from './components/pages/PendingPage.vue';
@@ -14,6 +17,7 @@ import InstructionsPage from './components/pages/InstructionsPage.vue';
 import store from './store';
 
 Vue.use(VueRouter);
+Vue.use(VueSweetalert2);
 
 Vue.use(MdAvatar);
 Vue.use(MdButton);
@@ -54,6 +58,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  base: HOME_PAGE_PATH,
   routes: routes,
   mode: 'history',
 });

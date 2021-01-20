@@ -1,15 +1,13 @@
 <template>
-  <span>
-    <md-toolbar class="md-primary">
-      <div>
-        <md-avatar>
-          <img alt="IGO logo" src="./../assets/igo.png" />
-        </md-avatar>
-        <span>Sample QC</span>
-        <md-button v-for="link in links" :key="link" :to="{ name: link }">{{ link }}</md-button>
-      </div>
-    </md-toolbar>
-  </span>
+  <md-toolbar class="md-primary">
+    <div>
+      <md-avatar>
+        <img alt="IGO logo" src="./../assets/igo.png" />
+      </md-avatar>
+      <span>Sample QC</span>
+      <md-button v-for="link in links" :key="link" :to="{ name: link }">{{ link }}</md-button>
+    </div>
+  </md-toolbar>
 </template>
 
 <script>

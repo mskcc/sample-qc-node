@@ -8,7 +8,7 @@ exports.authenticateRequest = function (req, res, next) {
   }
   try {
     let user = jwtInCookie.validateJwtToken(req);
-    console.log(user);
+    // console.log(user);
     res.user = user;
   } catch (err) {
     // console.log('not authorized');

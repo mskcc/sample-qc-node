@@ -1,7 +1,7 @@
 <template>
-  <div class="sidebar md-layout md-size-50 md-small-size-100">
+  <div class="sidebar">
     <form @submit.prevent="search">
-      <md-card class="md-layout-item md-small-size-100">
+      <md-card>
         <md-card-content>
           <md-field>
             <label>Request ID</label>
@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  name: 'SideBar',
   data: function() {
     return { requestId: '' };
   },

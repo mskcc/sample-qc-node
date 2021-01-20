@@ -2,7 +2,7 @@ const columnConstants = require('./columnConstants.js');
 const { getPicklistValues } = require('../services/services');
 
 export function buildReportTables(limsResponse, user) {
-  console.log(limsResponse);
+  // console.log(limsResponse);
   //   iterate over limsresponse entries and check if there are columns for that entry
   let limsResponseEntries = Object.keys(limsResponse);
   let frontEndResponse = {};
@@ -21,13 +21,14 @@ export function buildReportTables(limsResponse, user) {
         let resultColumn = columnDefs[column];
         // console.log(resultColumn);
         if (resultColumn.data === 'totalMass') {
-          // get first limsresponse sample and check its units so we can update the column header
+          // Determine total mass header based on the concentration units of the first sample in report
           if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'ng/ul') {
             resultColumn.columnHeader = 'Total Mass (ng)';
           } else if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'nm') {
             resultColumn.columnHeader = 'Total Mass (fmole)';
           }
         }
+        // Determine concentration header based on the concentration units of the first sample in report
         if (resultColumn.data === 'concentration') {
           if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'ng/ul') {
             resultColumn.columnHeader = 'Concentration (ng/uL)';
@@ -42,12 +43,29 @@ export function buildReportTables(limsResponse, user) {
             //   change resultcolumn readonly property to false
             resultColumn.readOnly = false;
           }
+          // for testing
+          if (user.isUser === false) {
+            //   change resultcolumn readonly property to false
+            resultColumn.readOnly = false;
+          }
         }
         // console.log(resultColumn);
         orderedColumnDefs.push(resultColumn);
       });
       //   console.log(orderedColumnDefs);
-      frontEndResponse[entry] = { columns: orderedColumnDefs, data: limsResponse[entry] };
+
+      let unhiddenSamples = [];
+      // hides samples
+      limsResponse[entry].forEach((sample) => {
+        if (!sample.hideFromSampleQC) {
+          if (entry === 'attachments') {
+            sample.action = '<i class="fas fa-cloud-download-alt"></i>';
+          }
+          unhiddenSamples.push(sample);
+        }
+      });
+      console.log(entry);
+      frontEndResponse[entry] = { columns: orderedColumnDefs, data: unhiddenSamples };
       // console.log(JSON.stringify(frontEndResponse));
     } else {
       //   console.log(entry);

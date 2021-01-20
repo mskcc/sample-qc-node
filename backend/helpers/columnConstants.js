@@ -61,19 +61,37 @@ export const sharedColumns = {
     data: 'concentration',
     columnHeader: 'Concentration',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   Volume: {
     data: 'volume',
     columnHeader: 'Volume (uL)',
     readOnly: true,
-    decimal: 0,
+    // decimal: 0,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 0,
+      },
+    },
   },
   TotalMass: {
     data: 'totalMass',
     columnHeader: 'Total Mass',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
 };
 
@@ -82,13 +100,25 @@ export const dnaReportSamplesColumns = {
     data: 'din',
     columnHeader: 'DIN',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   HumanPercentage: {
     data: 'humanPercentage',
     columnHeader: 'Human %',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   TumorOrNormal: {
     data: 'tumorOrNormal',
@@ -118,7 +148,13 @@ export const rnaReportSamplesColumns = {
     data: 'rin',
     columnHeader: 'RIN',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   Rqn: {
     data: 'rqn',
@@ -129,7 +165,13 @@ export const rnaReportSamplesColumns = {
     data: 'dV200',
     columnHeader: 'DV200',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   InvestigatorDecision: {
     data: 'investigatorDecision',
@@ -150,7 +192,13 @@ export const libraryReportSamplesColumns = {
     data: 'avgSize',
     columnHeader: 'Average Size (bp)',
     readOnly: true,
-    decimal: 0,
+    // decimal: 0,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 0,
+      },
+    },
   },
   TumorOrNormal: {
     limsField: 'TumorOrNormal',
@@ -178,7 +226,13 @@ export const poolReportSamplesColumns = {
     data: 'avgSize',
     columnHeader: 'Average Size (bp)',
     readOnly: true,
-    decimal: 0,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 0,
+      },
+    },
+    // decimal: 0,
   },
   TumorOrNormal: {
     limsField: 'TumorOrNormal',
@@ -322,21 +376,39 @@ export const covidReportSamplesColumns = {
     data: 'cqN1',
     columnHeader: 'CqN1',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   CqN2: {
     limsField: 'CqN2',
     data: 'cqN2',
     columnHeader: 'CqN2',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
   CqRP: {
     limsField: 'CqRP',
     data: 'cqRP',
     columnHeader: 'CqRP',
     readOnly: true,
-    decimal: 1,
+    // decimal: 1,
+    type: 'numeric',
+    numericFormat: {
+      pattern: {
+        mantissa: 1,
+      },
+    },
   },
 };
 

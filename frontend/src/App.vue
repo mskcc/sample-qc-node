@@ -4,7 +4,7 @@
     <!-- <HelloWorld /> -->
     <span>
       <show-header></show-header>
-      <loading :active.sync="isLoading" :can-cancel="true" :on-cancel="onCancel" :is-full-page="fullPage"></loading>
+      <loading :active.sync="isLoading" :can-cancel="true" :on-cancel="onCancel" :is-full-page="true"></loading>
       <router-view></router-view>
     </span>
   </div>
@@ -28,6 +28,11 @@ export default {
   computed: {
     isLoading: function() {
       return this.$store.getters.getIsLoading;
+    },
+  },
+  methods: {
+    onCancel() {
+      console.log('User cancelled the loader.');
     },
   },
 };

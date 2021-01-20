@@ -12,6 +12,7 @@ export default new Vuex.Store({
     reports: [],
     reportTypes: '',
     isLoading: false,
+    currentReportTab: '',
   },
   mutations: {
     setCurrentRequestId(state, payload) {
@@ -26,8 +27,11 @@ export default new Vuex.Store({
     setIsLoading(state, payload) {
       state.isLoading = payload;
     },
+    setCurrentReportTab(state, payload) {
+      state.currentReportTab = payload;
+    },
   },
-  //   commit mutations
+  // commit mutations
   actions: {
     setReports(context) {
       context.commit('setReports', null);
@@ -36,10 +40,11 @@ export default new Vuex.Store({
       app.axios
         .get(`${API_URL}/report/getReports/${this.state.requestId}`)
         .then((response) => {
-          console.log(response);
+          console.log(response.data.data);
           context.commit('setReports', response.data.data);
           context.commit('setReportTypes', Object.keys(response.data.data));
           context.commit('setIsLoading', false);
+          context.commit('setCurrentReportTab', Object.keys(response.data.data)[0]);
         })
         .catch((error) => {
           console.log(error);

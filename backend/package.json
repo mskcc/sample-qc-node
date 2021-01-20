@@ -30,7 +30,7 @@
     "morgan": "~1.9.0",
     "mysql2": "^2.2.5",
     "node-cache": "^5.1.2",
-    "nodemailer": "^6.4.11",
+    "nodemailer": "^6.4.17",
     "sequelize": "^6.3.5",
     "winston": "^3.3.3"
   },

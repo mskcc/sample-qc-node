@@ -1,6 +1,6 @@
 // const dbConfig = require('../config/db.config.js');
 
-const { connection } = require('mongoose');
+// const { connection } = require('mongoose');
 const Sequelize = require('sequelize');
 // use sequelize to connect to db
 // update .env with connection string

@@ -45,28 +45,19 @@
 .content {
   display: grid;
   grid-template-areas: 'sidebar comments' 'sidebar comments' 'sidebar tables ';
-  /* grid-template-rows: 30vh 65vh; */
-  grid-template-columns: 15% 85%;
-  /* grid-row-gap: 1em; */
-  /* grid-column-gap: 1em; */
+
+  grid-template-columns: 15% auto;
+  grid-template-rows: 40% auto;
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
 }
 
 .sidebar {
   grid-area: sidebar;
-  display: grid;
+  display: flex;
+  align-items: flex-start;
   min-height: 92vh;
   background-color: #eceff1;
-
-  /* textAlign: 'center',
-    gridArea: 'sidebar',
-    minHeight: '92vh',
-    backgroundColor: '#eceff1',
-    display: 'grid',
-    gridTemplate: '\'search\' \'infoPanel\'',
-    justifyItems: 'center',
-    borderRight: '2px solid darkgray',
-    gridTemplateRows: '.1fr .9fr',
-    alignItems: 'flex-start', */
 }
 
 .table {
@@ -79,11 +70,14 @@
 
 .md-card {
   max-width: 80%;
-  height: 50%;
 }
 
 .table-container {
-  width: 100vw;
-  overflow-x: auto;
+  /* width: 100vw; */
+  /* overflow-x: auto; */
   display: grid;
+}
+
+.fas.fa-cloud-download-alt {
+  cursor: pointer;
 }
