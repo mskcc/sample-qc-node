@@ -13,10 +13,18 @@ import TableContainer from './../TableContainer.vue';
 
 export default {
   name: 'ReportPage',
+  props: ['request'],
   components: {
     SideBar,
     CommentContainer,
     TableContainer,
+  },
+  mounted: function() {
+    if (this.$route.params.request) {
+      // console.log(this.$route.params);
+      this.$store.commit('setCurrentRequestId', this.$route.params.request);
+      this.$store.dispatch('setReports');
+    }
   },
 };
 </script>

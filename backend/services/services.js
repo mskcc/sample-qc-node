@@ -4,6 +4,9 @@ const QuoteModel = require('../models/QuoteModel');
 const { getNumQuotes } = require('../models/setup_deleteMe');
 const axios = require('axios');
 const https = require('https');
+const db = require('../models/index');
+
+// axios.defaults.withCredentials = true;
 
 const LIMS_AUTH = {
   username: process.env.LIMS_USER,
@@ -165,4 +168,73 @@ exports.setInvestigatorDecisions = async function (decisions) {
       console.log(response);
       // return response;
     });
+};
+
+exports.getCommentRelations = async function (requestId) {
+  console.log(typeof requestId);
+  // get commentrelations for that request
+  // if there are comments relations use their id to get comments and return
+
+  return db.models.commentrelations
+    .findAll({
+      where: {
+        request_id: requestId,
+      },
+    })
+    .then((commentrelations) => {
+      // console.log(commentrelations);
+      return commentrelations;
+    });
+  // .catch((error) => {
+  //   console.log(error);
+  //   throw error;
+  // });
+
+  //   db.models.commentrelations
+  //     .findAll({
+  //       where: db.sequelize.literal('decisions.request_id IS null'),
+  //       include: [{ model: db.models.decisions }],
+  //     })
+  //     .then((requests) => console.log(requests));
+};
+
+exports.getComments = async function (commentRelationId, report) {
+  return db.models.comments
+    .findAll({
+      where: {
+        commentrelation_id: commentRelationId,
+      },
+    })
+    .then((comments) => {
+      // console.log(commentrelations);
+      let reportComments = {};
+      reportComments.reportName = report;
+      reportComments.comments = comments;
+      return reportComments;
+    });
+  // .catch((error) => {
+  //   console.log(error);
+  //   throw error;
+  // });
+};
+
+// get user groups
+exports.getUserGroups = async function () {
+  return (
+    axios
+      // .get(process.env.AUTH_URL + '/api/session/user', { withCredentials: true })
+      .get('http://localhost:4200/api/session/user', { withCredentials: true })
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      })
+      .then((response) => {
+        console.log(response);
+        // return response;
+      })
+  );
 };

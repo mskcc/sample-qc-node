@@ -1,8 +1,7 @@
 const columnConstants = require('./columnConstants.js');
-const { getPicklistValues } = require('../services/services');
+const { getPicklistValues, getUserGroups } = require('../services/services');
 
 export function buildReportTables(limsResponse, user) {
-  // console.log(limsResponse);
   //   iterate over limsresponse entries and check if there are columns for that entry
   let limsResponseEntries = Object.keys(limsResponse);
   let frontEndResponse = {};
@@ -10,16 +9,18 @@ export function buildReportTables(limsResponse, user) {
     //   get the name of the constant in constants file
     let columnConstantsEntryName = entry + 'Columns';
     let columnConstantsOrder = entry + 'Order';
-    // console.log(entry);
+
     if (columnConstants[columnConstantsEntryName] && limsResponse[entry].length > 0) {
       // merge lims columns with constant columns to get the column definitions
+      // merges shared columns with specific columns for that report type to build full column definitiions for report
       let columnDefs = { ...columnConstants.sharedColumns, ...columnConstants[entry + 'Columns'] };
       // iterate over ordered column array
       let orderedColumnDefs = [];
       //   add that column object from columnDefs
+      // arranges columns in the desired order
       columnConstants[columnConstantsOrder].forEach((column) => {
         let resultColumn = columnDefs[column];
-        // console.log(resultColumn);
+
         if (resultColumn.data === 'totalMass') {
           // Determine total mass header based on the concentration units of the first sample in report
           if (limsResponse[entry][0].concentrationUnits.toLowerCase() === 'ng/ul') {
@@ -49,10 +50,8 @@ export function buildReportTables(limsResponse, user) {
             resultColumn.readOnly = false;
           }
         }
-        // console.log(resultColumn);
         orderedColumnDefs.push(resultColumn);
       });
-      //   console.log(orderedColumnDefs);
 
       let unhiddenSamples = [];
       // hides samples
@@ -64,8 +63,10 @@ export function buildReportTables(limsResponse, user) {
           unhiddenSamples.push(sample);
         }
       });
-      console.log(entry);
-      frontEndResponse[entry] = { columns: orderedColumnDefs, data: unhiddenSamples };
+      // console.log(entry);
+      let translatedReportName = translateReportName(entry);
+      frontEndResponse[translatedReportName] = { columns: orderedColumnDefs, data: unhiddenSamples };
+
       // console.log(JSON.stringify(frontEndResponse));
     } else {
       //   console.log(entry);
@@ -91,4 +92,48 @@ export function buildReportTables(limsResponse, user) {
   //   // }
   //   // reports[report]= reportColDefs;
   return frontEndResponse;
+}
+
+export function translateReportName(entry) {
+  let translatedReportName;
+  if (entry === 'attachments') {
+    translatedReportName = 'Attachments';
+  } else if (entry === 'dnaReportSamples') {
+    translatedReportName = 'DNA Report';
+  } else if (entry === 'rnaReportSamples') {
+    translatedReportName = 'RNA Report';
+  } else if (entry === 'libraryReportSamples') {
+    translatedReportName = 'Library Report';
+  } else if (entry === 'poolReportSamples') {
+    translatedReportName = 'Pool Report';
+  } else if (entry === 'pathologyReportSamples') {
+    translatedReportName = 'Pathology Report';
+  } else if (entry === 'covidReportSamples') {
+    translatedReportName = 'COVID19 Report';
+  }
+  return translatedReportName;
+}
+
+export function isUserAuthorized(commentRelations, user, userGroups) {
+  // getUserGroups();
+  let resultBoolean = false;
+  commentRelations.forEach((commentRelation) => {
+    // user is specifically listed in recipients
+    if (commentRelation.recipients.includes(user.username)) {
+      resultBoolean = true;
+    }
+    // user is a CMO PM and recipients includes cmo pm email address
+    if (user.isPM && commentRelation.recipients.includes(process.env.CMO_PM_EMAIL)) {
+      resultBoolean = true;
+    }
+    // user is part of group that's included in recipients
+    let recipientsArray = commentRelation.recipients.split(',');
+
+    recipientsArray.forEach((recipient) => {
+      if (userGroups.toLowerCase().includes(recipient.replace('@mskcc.org', '').toLowerCase())) {
+        resultBoolean = true;
+      }
+    });
+  });
+  return resultBoolean;
 }

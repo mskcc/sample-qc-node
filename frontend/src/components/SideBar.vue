@@ -17,6 +17,7 @@
 </template>
 
 <script>
+// import { HOME_PAGE_PATH } from './../../config.js';
 export default {
   name: 'SideBar',
   data: function() {
@@ -24,8 +25,12 @@ export default {
   },
   methods: {
     search() {
+      // axios call to login to get current user's groups? or should this happen when app.vue is mounted? and store the groups in the store?
+
       this.$store.commit('setCurrentRequestId', this.requestId);
       this.$store.dispatch('setReports');
+
+      history.pushState(this.requestId, '', `http://localhost:8080/${this.requestId}`);
     },
   },
 };

@@ -2,7 +2,7 @@ var express = require('express');
 const ReportController = require('../controllers/ReportController');
 var router = express.Router();
 
-router.get('/getReports/:requestId', ReportController.getReports);
+// change to post request
 router.get('/downloadAttachment/:recordId', ReportController.downloadAttachment);
 router.post('/submitInvestigatorDecisions', ReportController.submitInvestigatorDecisions);
 

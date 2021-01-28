@@ -24,6 +24,7 @@ Vue.use(MdButton);
 Vue.use(MdCard);
 Vue.use(MdField);
 Vue.use(MdTabs);
+
 Vue.use(MdToolbar);
 
 Vue.config.productionTip = false;
@@ -52,7 +53,7 @@ app.axios.interceptors.response.use(
 );
 
 const routes = [
-  { path: '/', component: ReportPage, name: 'report' },
+  { path: '/:request?', component: ReportPage, name: 'report', props: true },
   { path: '/pending', component: PendingPage, name: 'pending' },
   { path: '/instructions', component: InstructionsPage, name: 'instructions' },
 ];

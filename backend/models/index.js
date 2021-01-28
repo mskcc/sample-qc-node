@@ -4,6 +4,7 @@
 const Sequelize = require('sequelize');
 // use sequelize to connect to db
 // update .env with connection string
+// const sequelize = new Sequelize
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PW, {
   port: process.env.DB_PORT,
   host: process.env.DB_HOST,

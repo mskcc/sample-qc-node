@@ -13,6 +13,7 @@ export default new Vuex.Store({
     reportTypes: '',
     isLoading: false,
     currentReportTab: '',
+    userGroups: null,
   },
   mutations: {
     setCurrentRequestId(state, payload) {
@@ -30,27 +31,46 @@ export default new Vuex.Store({
     setCurrentReportTab(state, payload) {
       state.currentReportTab = payload;
     },
+    setUserGroups(state, payload) {
+      state.userGroups = payload;
+    },
   },
   // commit mutations
   actions: {
     setReports(context) {
-      context.commit('setReports', null);
-      context.commit('setReportTypes', null);
-      context.commit('setIsLoading', true);
+      // if (!this.state.userGroups) {
+      // get the users groups
+
       app.axios
-        .get(`${API_URL}/report/getReports/${this.state.requestId}`)
+        // .get(AUTH_URL + '/api/session/user')
+        // .get('http://igodev.mskcc.org/login/api/session/user')
+        .get('http://localhost:4200/api/session/user')
         .then((response) => {
-          console.log(response.data.data);
-          context.commit('setReports', response.data.data);
-          context.commit('setReportTypes', Object.keys(response.data.data));
-          context.commit('setIsLoading', false);
-          context.commit('setCurrentReportTab', Object.keys(response.data.data)[0]);
+          context.commit('setUserGroups', response.data.data.groups);
+          context.commit('setReports', null);
+          context.commit('setReportTypes', null);
+          context.commit('setIsLoading', true);
+
+          app.axios
+            .post(`${API_URL}/report/getReports`, { requestId: this.state.requestId, userGroups: this.state.userGroups })
+            .then((response) => {
+              console.log(response.data.data);
+              context.commit('setReports', response.data.data);
+              context.commit('setReportTypes', Object.keys(response.data.data));
+              context.commit('setIsLoading', false);
+              context.commit('setCurrentReportTab', Object.keys(response.data.data)[0]);
+            })
+            .catch((error) => {
+              console.log(error);
+              context.commit('setIsLoading', false);
+            });
         })
         .catch((error) => {
           console.log(error);
-          context.commit('setIsLoading', false);
+          // throw error;
         });
     },
+    // },
   },
   getters: {
     getReports: (state) => state.reports,
